@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { HTMLMotionProps } from "framer-motion";
 
@@ -116,6 +117,8 @@ const MotionLi = React.forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
     }
 );
 
+const MotionLink = motion.create(Link);
+
 export {
     MotionDiv,
     MotionMain,
@@ -127,5 +130,6 @@ export {
     MotionSpan,
     MotionP,
     MotionFooter,
-    MotionLi
+    MotionLi,
+    MotionLink
 };

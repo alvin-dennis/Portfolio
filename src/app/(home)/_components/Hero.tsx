@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MotionH1, MotionSpan } from "@/components/Framer";
+import { MotionDiv, MotionH1, MotionSpan } from "@/components/Framer";
 import RotatingText from "@/components/ui/RotatingText";
 
 export default function Hero() {
@@ -34,7 +34,13 @@ export default function Hero() {
             N
           </MotionSpan>
         </MotionH1>
-        <div className="mt-10 md:mt-14">
+
+        <MotionDiv
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="mt-10 md:mt-14"
+        >
           <RotatingText
             texts={["React", "Bits", "Is", "Cool!"]}
             mainClassName="
@@ -54,17 +60,23 @@ export default function Hero() {
             transition={{ type: "spring", damping: 30, stiffness: 400 }}
             rotationInterval={2000}
           />
-        </div>
+        </MotionDiv>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[180px] sm:h-[240px] md:h-[300px] lg:h-[380px] z-0">
+
+      <MotionDiv
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="absolute bottom-0 left-0 w-full h-[180px] sm:h-[240px] md:h-[300px] lg:h-[380px] z-0"
+      >
         <Image
-          src="/assets/home/bottom.webp"
+          src="/assets/common/bottom.webp"
           alt="Hero decoration"
           fill
           className="object-contain md:object-cover"
           priority
         />
-      </div>
+      </MotionDiv>
     </section>
   );
 }

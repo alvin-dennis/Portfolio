@@ -1,51 +1,15 @@
 "use client"
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MotionDiv } from '@/components/Framer';
+import { projects } from '@/lib/data';
 
-const ProjectsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+export default function Projects() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const projects = [
-    {
-      id: 1,
-      title: 'HOME FOR YOU',
-      description: 'Real estate platform with modern UI',
-      tags: ['Web Design', 'UI/UX'],
-      gradient: 'from-orange-500 via-red-500 to-pink-500',
-      mockupBg: 'from-orange-600/30 to-red-600/30',
-    },
-    {
-      id: 2,
-      title: 'Dashboard Pro',
-      description: 'Analytics dashboard application',
-      tags: ['Dashboard', 'React'],
-      gradient: 'from-blue-500 via-purple-500 to-pink-500',
-      mockupBg: 'from-blue-600/30 to-purple-600/30',
-    },
-    {
-      id: 3,
-      title: 'Portfolio Site',
-      description: 'Creative personal portfolio',
-      tags: ['Portfolio', 'Design'],
-      gradient: 'from-green-500 via-teal-500 to-cyan-500',
-      mockupBg: 'from-green-600/30 to-teal-600/30',
-    },
-    {
-      id: 4,
-      title: 'E-Commerce App',
-      description: 'Modern shopping experience',
-      tags: ['E-Commerce', 'Mobile'],
-      gradient: 'from-yellow-500 via-orange-500 to-red-500',
-      mockupBg: 'from-yellow-600/30 to-orange-600/30',
-    },
-  ];
-
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % projects.length);
   };
@@ -69,11 +33,11 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" ref={ref} className="relative py-20 px-6 overflow-hidden">
+    <section id="projects" className="relative py-20 px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
@@ -85,10 +49,10 @@ const ProjectsSection = () => {
             <span className="w-2 h-2 rounded-full bg-primary" />
             <span className="w-8 h-0.5 bg-primary" />
           </div>
-        </motion.div>
+        </MotionDiv>
 
         <div className="relative h-[400px] md:h-[450px] perspective-1000">
-          <motion.div
+          <MotionDiv
             whileHover={{ scale: 1.1, x: -5 }}
             whileTap={{ scale: 0.9 }}
             className="absolute left-0 md:left-4 top-1/2 -translate-y-1/2 z-40"
@@ -100,8 +64,8 @@ const ProjectsSection = () => {
             >
               <ChevronLeft className="w-6 h-6 text-foreground" />
             </Button>
-          </motion.div>
-          <motion.div
+          </MotionDiv>
+          <MotionDiv
             whileHover={{ scale: 1.1, x: 5 }}
             whileTap={{ scale: 0.9 }}
             className="absolute right-0 md:right-4 top-1/2 -translate-y-1/2 z-40"
@@ -113,14 +77,14 @@ const ProjectsSection = () => {
             >
               <ChevronRight className="w-6 h-6 text-foreground" />
             </Button>
-          </motion.div>
+          </MotionDiv>
           <div className="relative w-full h-full flex items-center justify-center">
             {projects.map((project, index) => {
               const style = getSlideStyle(index);
               const isActive = index === currentIndex;
 
               return (
-                <motion.div
+                <MotionDiv
                   key={project.id}
                   animate={{
                     x: style.x,
@@ -138,7 +102,7 @@ const ProjectsSection = () => {
                   className="absolute w-[280px] md:w-[320px]"
                   style={{ transformStyle: "preserve-3d" }}
                 >
-                  <motion.div whileHover={isActive ? { y: -10 } : {}}>
+                  <MotionDiv whileHover={isActive ? { y: -10 } : {}}>
                     <Card className="relative overflow-hidden rounded-2xl bg-secondary shadow-2xl border-border">
                       <CardHeader className="relative p-0">
                         <div
@@ -154,7 +118,7 @@ const ProjectsSection = () => {
                             </div>
                           </div>
                           {isActive && (
-                            <motion.div
+                            <MotionDiv
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.3, ease: "easeOut" }}
@@ -164,7 +128,7 @@ const ProjectsSection = () => {
                                 <span>View Project</span>
                                 <ExternalLink className="w-4 h-4" />
                               </Button>
-                            </motion.div>
+                            </MotionDiv>
                           )}
                         </div>
                       </CardHeader>
@@ -179,18 +143,19 @@ const ProjectsSection = () => {
 
                         <div className="flex flex-wrap gap-2">
                           {project.tags.map((tag) => (
-                            <span
+                            <Badge
                               key={tag}
-                              className="px-2 py-0.5 text-xs rounded-full border border-border bg-secondary text-muted-foreground"
+                              variant={"outline"}
+                              className="text-xs"
                             >
                               {tag}
-                            </span>
+                            </Badge>
                           ))}
                         </div>
                       </CardContent>
                     </Card>
-                  </motion.div>
-                </motion.div>
+                  </MotionDiv>
+                </MotionDiv>
               );
             })}
           </div>
@@ -199,7 +164,7 @@ const ProjectsSection = () => {
             {projects.map((_, index) => {
               const isActive = index === currentIndex;
               return (
-                <motion.div
+                <MotionDiv
                   key={index}
                   whileHover={{ scale: 1.2 }}
                   className="flex items-center"
@@ -212,34 +177,37 @@ const ProjectsSection = () => {
                       ? "w-6 bg-primary hover:bg-primary"
                       : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"}`}
                   />
-                </motion.div>
+                </MotionDiv>
               );
             })}
           </div>
         </div>
 
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-4 mt-16"
         >
           {['Web Design', 'UI/UX', 'Dashboard', 'React', 'Portfolio', 'Mobile'].map((tag, index) => (
-            <motion.span
+            <MotionDiv
               key={tag}
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 + index * 0.1 }}
               whileHover={{ scale: 1.1, y: -2 }}
-              className="px-4 py-1.5 text-sm border border-primary/30 rounded-full text-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-all cursor-pointer"
+              className="cursor-pointer"
             >
-              {tag}
-            </motion.span>
+              <Badge
+                variant="outline"
+                className="text-sm"
+              >
+                {tag}
+              </Badge>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
       </div>
     </section>
   );
 };
-
-export default ProjectsSection;

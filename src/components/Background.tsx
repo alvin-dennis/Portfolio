@@ -10,7 +10,7 @@ export default function Background({
     return (
         <div
             className="relative min-h-screen w-full bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url("/assets/home/background.webp")` }}
+            style={{ backgroundImage: `url("/assets/common/background.webp")` }}
         >
             <div
                 className={`absolute inset-0 bg-black/50 pointer-events-none`}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Abyssinica_SIL, Iceland } from "next/font/google";
 import "./globals.css";
 import Background from "@/components/Background";
+import Navbar from "@/components/Navbar";
 
 const abyssinicaSil = Abyssinica_SIL({
   weight: "400",
@@ -62,6 +63,7 @@ export default function RootLayout({
         className={`${abyssinicaSil.variable} ${iceland.variable} font-body antialiased`}
       >
         <Background>
+          <Navbar />
           {children}
         </Background>
       </body>

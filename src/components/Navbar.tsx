@@ -1,20 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { navItems } from "@/lib/data";
+import { MotionDiv, MotionHeader, MotionLink, MotionSpan } from "./Framer";
 
-const MotionLink = motion(Link);
-
-const Navbar = () => {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-
-  const navItems = ["Home", "About", "Projects", "Skills", "Contact"];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,7 +21,6 @@ const Navbar = () => {
       for (const section of sections.reverse()) {
         const el = document.getElementById(section);
         if (!el) continue;
-
         const rect = el.getBoundingClientRect();
         if (rect.top <= 150) {
           setActiveSection(section);
@@ -32,7 +28,6 @@ const Navbar = () => {
         }
       }
     };
-
     handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -80,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
+    <MotionHeader
       variants={navVariants}
       initial="hidden"
       animate="visible"
@@ -92,7 +87,7 @@ const Navbar = () => {
 
       <div className="relative max-w-6xl mx-auto px-6 flex items-center justify-between">
         <MotionLink
-          href="#home"
+          href="/"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="relative group"
@@ -123,7 +118,7 @@ const Navbar = () => {
                 className="relative px-4 py-2 text-sm"
               >
                 {isActive && (
-                  <motion.span
+                  <MotionSpan
                     layoutId="activeNav"
                     className="absolute inset-0 rounded-full bg-primary"
                     transition={{
@@ -157,13 +152,13 @@ const Navbar = () => {
             whileTap={{ scale: 0.95 }}
           >
             <span className="relative">Hire Me</span>
-            <motion.span
+            <MotionSpan
               className="relative ml-2"
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               →
-            </motion.span>
+            </MotionSpan>
           </MotionLink>
         </Button>
 
@@ -175,7 +170,7 @@ const Navbar = () => {
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
-              <motion.div
+              <MotionDiv
                 key="close"
                 initial={{ rotate: -90, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
@@ -183,9 +178,9 @@ const Navbar = () => {
                 transition={{ duration: 0.2 }}
               >
                 <X className="w-5 h-5" />
-              </motion.div>
+              </MotionDiv>
             ) : (
-              <motion.div
+              <MotionDiv
                 key="menu"
                 initial={{ rotate: 90, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
@@ -193,16 +188,14 @@ const Navbar = () => {
                 transition={{ duration: 0.2 }}
               >
                 <Menu className="w-5 h-5" />
-              </motion.div>
+              </MotionDiv>
             )}
           </AnimatePresence>
         </Button>
       </div>
-
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <MotionDiv
             variants={mobileMenuVariants}
             initial="hidden"
             animate="visible"
@@ -230,7 +223,7 @@ const Navbar = () => {
                   >
                     {item}
                     {isActive && (
-                      <motion.span
+                      <MotionSpan
                         layoutId="mobileActiveNav"
                         className="inline-block ml-2 w-2 h-2 rounded-full bg-primary"
                       />
@@ -238,7 +231,6 @@ const Navbar = () => {
                   </MotionLink>
                 );
               })}
-
               <Button
                 variant={"default"}
                 asChild
@@ -254,12 +246,10 @@ const Navbar = () => {
                 </MotionLink>
               </Button>
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </MotionHeader>
   );
 };
-
-export default Navbar;
 
